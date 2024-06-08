@@ -34,17 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_OK = 1;
 
     Button stop_button, restart_button;
-    private final ActivityResultLauncher<Intent> enableBluetoothLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    searchBluetoothDevices();
-                } else {
-                    Toast.makeText(this, "El usuario no habilitó Bluetooth",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-    );
 
     @SuppressLint("MissingPermission")
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -129,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
     private void searchBluetoothDevices() {
         if (!bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            enableBluetoothLauncher.launch(enableBtIntent);
         } else {
 
             devicesAdapter.notifyDataSetChanged();
